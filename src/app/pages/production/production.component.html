@@ -1,1 +1,25 @@
-<p>production works!</p>
+<app-nav-production></app-nav-production>
+
+<div class="container">
+  <h1>Liste des productions</h1>
+  <table class="table table-responsive">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Produit</th>
+        <th>Status</th>
+        <th>Qte</th>
+        <th>T.Cout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr (click)="open(production)" *ngFor="let production of productions">
+        <td>{{ production.dateDebutProduction | date }}</td>
+        <td><b>{{ production.produit}}</b></td>
+        <td>{{production.status}}</td>
+        <td>{{ production.quantiteProduction}}</td>
+        <td>{{ production.coutProduction}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

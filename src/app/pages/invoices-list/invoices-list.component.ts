@@ -3,16 +3,17 @@ import { InvoiceListService } from '../../services/invoices/invoice-list.service
 import { Invoice } from '../../models/invoice';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgFor } from '@angular/common';
+import { NavProductionComponent } from "../../layout/nav-production/nav-production.component";
 
 @Component({
-  selector: 'app-invoices-list',
-  standalone: true,
-  imports: [NgFor],
-  providers: [
-    HttpClientModule
-  ],
-  templateUrl: './invoices-list.component.html',
-  styleUrl: './invoices-list.component.css'
+    selector: 'app-invoices-list',
+    standalone: true,
+    providers: [
+        HttpClientModule
+    ],
+    templateUrl: './invoices-list.component.html',
+    styleUrl: './invoices-list.component.css',
+    imports: [NgFor, NavProductionComponent]
 })
 export class InvoicesListComponent implements OnInit {
 
