@@ -3,14 +3,15 @@ import { RouterLink } from '@angular/router';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-nav-production',
+  selector: 'app-nav-ventes',
   standalone: true,
   imports: [RouterLink, NgbCollapse],
-  templateUrl: './nav-production.component.html',
-  styleUrl: './nav-production.component.css'
+  templateUrl: './nav-ventes.component.html',
+  styleUrl: './nav-ventes.component.css'
 })
-export class NavProductionComponent {
+export class NavVentesComponent {
 
   isMenuCollapsed:boolean = false ;
   title:string = "Menu"
+
 }
