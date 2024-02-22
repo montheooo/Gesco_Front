@@ -1,20 +1,22 @@
-<app-nav-production></app-nav-production>
+<app-nav-ventes></app-nav-ventes>
 
 <div class="container">
-  <h1>Liste des factures</h1>
+  <h1>Liste des ventes</h1>
   <table class="table table-responsive">
     <thead>
       <tr>
-        <th>Numéro de facture</th>
-        <th>Montant</th>
         <th>Date</th>
+        <th>Facture</th>
+        <th>Client</th>
+        <th>Montant</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let invoice of invoices">
-        <td>{{ invoice.numeroFacture }}</td>
+      <tr (click)="open(invoice)" *ngFor="let invoice of invoices">
+        <td>{{ invoice.dateFacture | date}}</td>
         <td>{{ invoice.referenceFacture }}</td>
-        <td>{{ invoice.dateFacture}}</td>
+        <td><b>{{ invoice.nomClient}}</b></td>
+        <td>{{ invoice.montantFacture}}</td>
       </tr>
     </tbody>
   </table>

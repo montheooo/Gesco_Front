@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { InvoiceListService } from '../../services/invoices/invoice-list.service';
 import { Invoice } from '../../models/invoice';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgFor } from '@angular/common';
+import { DatePipe, NgFor } from '@angular/common';
 import { NavProductionComponent } from "../../layout/nav-production/nav-production.component";
+import { NavVentesComponent } from "../../layout/nav-ventes/nav-ventes.component";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LigneFactureVentesModal } from '../../modals/ventes/LigneFactureModal';
 
 @Component({
     selector: 'app-invoices-list',
@@ -13,14 +16,16 @@ import { NavProductionComponent } from "../../layout/nav-production/nav-producti
     ],
     templateUrl: './invoices-list.component.html',
     styleUrl: './invoices-list.component.css',
-    imports: [NgFor, NavProductionComponent]
+    imports: [NgFor, NavProductionComponent, NavVentesComponent, DatePipe]
 })
 export class InvoicesListComponent implements OnInit {
 
-  constructor(private invoiceListService:InvoiceListService ){
+  private modalService = inject(NgbModal);
 
-  }
   invoices:any;
+
+  constructor(private invoiceListService:InvoiceListService ){
+  }
 
   ngOnInit(): void {
 
@@ -29,6 +34,13 @@ export class InvoicesListComponent implements OnInit {
         console.log(data);
         this.invoices = data ;
       })
+  }
+
+  open(facture:any) {
+
+    const modalRef = this.modalService.open(LigneFactureVentesModal, { size: 'lg', centered:true, scrollable:true });
+    console.log(facture);
+    modalRef.componentInstance.facture= facture;
   }
 
 }

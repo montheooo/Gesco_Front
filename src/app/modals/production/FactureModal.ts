@@ -1,6 +1,6 @@
 import { Component, Input, inject } from "@angular/core";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { LigneFactureModal} from "../LigneFactureModal";
+import { LigneFactureModal} from "./LigneFactureModal";
 import { Invoice } from "../../models/invoice";
 import { DatePipe, NgFor } from "@angular/common";
 

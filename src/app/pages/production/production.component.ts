@@ -15,6 +15,7 @@ import { FactureModal } from '../../modals/production/FactureModal';
 export class ProductionComponent {
 
   private modalService = inject(NgbModal);
+
   productions:any ;
 
   constructor(private productionService:ProductionService){
