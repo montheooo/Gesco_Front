@@ -11,9 +11,6 @@ import { LigneFactureVentesModal } from '../../modals/ventes/LigneFactureModal';
 @Component({
     selector: 'app-invoices-list',
     standalone: true,
-    providers: [
-        HttpClientModule
-    ],
     templateUrl: './invoices-list.component.html',
     styleUrl: './invoices-list.component.css',
     imports: [NgFor, NavProductionComponent, NavVentesComponent, DatePipe]
@@ -22,7 +19,7 @@ export class InvoicesListComponent implements OnInit {
 
   private modalService = inject(NgbModal);
 
-  invoices:any;
+  invoices!:any;
 
   constructor(private invoiceListService:InvoiceListService ){
   }

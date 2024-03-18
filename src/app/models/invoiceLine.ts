@@ -1,8 +1,11 @@
+import { Article } from "./article";
+import { Depot } from "./depot";
+
 export interface InvoiceLine {
 
-  articleId?: number,
-  articleName: string,
-  unitPrice: number,
-  quantity: number
+  article: Article,
+  depot: Depot,
+  prix_unitaire: number,
+  quantite: number
 
 }

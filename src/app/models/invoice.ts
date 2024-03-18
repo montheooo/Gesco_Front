@@ -1,12 +1,12 @@
+import { Client } from "./client"
 import { InvoiceLine } from "./invoiceLine"
 
 export interface Invoice{
 
-  client:string,
+  client:Client,
   invoiceReference:string
-  invoiceNumber: number,
   invoiceDate: Date
-  invoiceLine: InvoiceLine
+  invoiceLines: InvoiceLine[]
 
 
 }

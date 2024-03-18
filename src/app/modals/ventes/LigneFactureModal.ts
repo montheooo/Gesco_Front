@@ -1,5 +1,7 @@
 import { DatePipe, NgFor } from "@angular/common";
 import { Component, Input, inject } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { Router } from "@angular/router";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -43,13 +45,14 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 })
 export class LigneFactureVentesModal {
 
-
-  private modalService = inject(NgbModal);
-
   @Input()
   facture:any;
 
   activeModal = inject(NgbActiveModal);
+
+  constructor(private formBuilder:FormBuilder, private router:Router, ){
+
+  }
 
   ngOnInit():void{
 
