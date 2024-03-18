@@ -6,6 +6,7 @@ import { ProductionComponent } from './pages/production/production.component';
 import { VenteComponent } from './pages/vente/vente.component';
 import { RapportComponent } from './pages/rapport/rapport.component';
 import { StockComponent } from './pages/stock/stock.component';
+import { InvoicesAddComponent } from './pages/invoices-add/invoices-add.component';
 
 export const routes: Routes = [
 
@@ -16,5 +17,6 @@ export const routes: Routes = [
   { path: 'vente', component: VenteComponent },
   { path: 'rapport', component: RapportComponent },
   { path: 'stock', component: StockComponent },
+  { path: 'invoices-add', component: InvoicesAddComponent },
 
 ];
