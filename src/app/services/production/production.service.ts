@@ -7,13 +7,16 @@ import { take, tap } from 'rxjs';
 })
 export class ProductionService {
 
+  backendUrl = 'https://gescoapiappservice.azurewebsites.net' ;
+  //backendUrl = 'http://localhost:5140' ;
+
   constructor(private http:HttpClient) {
 
   }
 
   getAllProduction(){
 
-    return this.http.get(`http://localhost:5140/production`).pipe(
+    return this.http.get(this.backendUrl+'/production').pipe(
       tap(),
       take(1)
     )
