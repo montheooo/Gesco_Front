@@ -16,46 +16,46 @@ import { Article } from "../../models/article";
 		</div>
 		<div class="modal-body">
       <div class="container">
-        <div class="col-auto form-group" [formGroup]="ligneFactureFormGroup">
+          <div class="col-auto form-group" [formGroup]="ligneFactureFormGroup">
 
-            <div class="col-auto form-group ">
-              <label for="article">Article</label>
-              <input type="text" class="form-control" id="article" [ngbTypeahead]="articleSearch" [resultFormatter]="formatterArticle" [inputFormatter]="formatterArticle"
-                    placeholder="Selectionner un article" formControlName="article" [ngClass]="{ 'is-invalid': submitted && f['article'].errors }"/>
-              <div *ngIf="submitted && f['article'].errors" class="invalid-feedback">
-                <div *ngIf="f['article'].errors['required']">Entrez le nom de l'article</div>
+              <div class="col-auto form-group ">
+                <label for="article">Article</label>
+                <input type="text" class="form-control" id="article" [ngbTypeahead]="articleSearch" [resultFormatter]="formatterArticle" [inputFormatter]="formatterArticle"
+                      placeholder="Selectionner un article" formControlName="article" [ngClass]="{ 'is-invalid': submitted && f['article'].errors }"/>
+                <div *ngIf="submitted && f['article'].errors" class="invalid-feedback">
+                  <div *ngIf="f['article'].errors['required']">Entrez le nom de l'article</div>
+                </div>
               </div>
-            </div>
 
-            <div class="col-auto form-group ">
-              <label for="quantite">quantite</label>
-              <input type="number" class="form-control" id="quantite"
-                    placeholder="Entrer le quantite" formControlName="quantite" [ngClass]="{ 'is-invalid': submitted && f['quantite'].errors }"/>
-              <div *ngIf="submitted && f['quantite'].errors" class="invalid-feedback">
-                <div *ngIf="f['quantite'].errors['required']">Entrez la quantite</div>
+              <div class="col-auto form-group ">
+                <label for="quantite">quantite</label>
+                <input type="number" class="form-control" id="quantite"
+                      placeholder="Entrer le quantite" formControlName="quantite" [ngClass]="{ 'is-invalid': submitted && f['quantite'].errors }"/>
+                <div *ngIf="submitted && f['quantite'].errors" class="invalid-feedback">
+                  <div *ngIf="f['quantite'].errors['required']">Entrez la quantite</div>
+                </div>
               </div>
-            </div>
 
-            <div class="col-auto form-group ">
-              <label for="prix_unitaire">Prix Unitaire</label>
-              <input type="number" class="form-control" id="prix-unitaire"
-                    placeholder="Entrer le prix unitaire" formControlName="prix_unitaire" [ngClass]="{ 'is-invalid': submitted && f['prix_unitaire'].errors }"/>
-              <div *ngIf="submitted && f['prix_unitaire'].errors" class="invalid-feedback">
-                <div *ngIf="f['prix_unitaire'].errors['required']">Entrez le prix unitaire</div>
+              <div class="col-auto form-group ">
+                <label for="prix_unitaire">Prix Unitaire</label>
+                <input type="number" class="form-control" id="prix-unitaire"
+                      placeholder="Entrer le prix unitaire" formControlName="prix_unitaire" [ngClass]="{ 'is-invalid': submitted && f['prix_unitaire'].errors }"/>
+                <div *ngIf="submitted && f['prix_unitaire'].errors" class="invalid-feedback">
+                  <div *ngIf="f['prix_unitaire'].errors['required']">Entrez le prix unitaire</div>
+                </div>
               </div>
-            </div>
 
-            <div class="col-auto form-group ">
-              <label for="depot">Depot</label>
-              <input type="text" class="form-control" id="depot" [ngbTypeahead]="depotSearch" [resultFormatter]="formatterDepot" [inputFormatter]="formatterDepot"
-                    placeholder="Selectionner un depot" formControlName="depot" [ngClass]="{ 'is-invalid': submitted && f['depot'].errors }"/>
-              <div *ngIf="submitted && f['depot'].errors" class="invalid-feedback">
-                <div *ngIf="f['depot'].errors['required']">Entrez le nom du depot</div>
+              <div class="col-auto form-group ">
+                <label for="depot">Depot</label>
+                <input type="text" class="form-control" id="depot" [ngbTypeahead]="depotSearch" [resultFormatter]="formatterDepot" [inputFormatter]="formatterDepot"
+                      placeholder="Selectionner un depot" formControlName="depot" [ngClass]="{ 'is-invalid': submitted && f['depot'].errors }"/>
+                <div *ngIf="submitted && f['depot'].errors" class="invalid-feedback">
+                  <div *ngIf="f['depot'].errors['required']">Entrez le nom du depot</div>
+                </div>
               </div>
-            </div>
 
           </div>
-        </div>
+      </div>
     </div>
 
 		<div class="modal-footer">

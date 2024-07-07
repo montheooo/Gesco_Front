@@ -7,8 +7,8 @@ import { take, tap } from 'rxjs';
 })
 export class ProductionService {
 
-  backendUrl = 'https://gescoapiappservice.azurewebsites.net' ;
-  //backendUrl = 'http://localhost:5140' ;
+  backendUrl = 'https://gescofunctionaz.azurewebsites.net/api' ;
+  //backendUrl = 'http://localhost:7209/api' ;
 
   constructor(private http:HttpClient) {
 

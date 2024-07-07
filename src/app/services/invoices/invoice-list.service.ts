@@ -10,33 +10,24 @@ import { InvoiceDTO } from '../../modelsDTO/invoiceDTO';
 })
 export class InvoiceListService {
 
-  backendUrl = 'https://gescoapiappservice.azurewebsites.net' ;
-  //backendUrl = 'http://localhost:5140' ;
+  backendUrl = 'https://gescofunctionaz.azurewebsites.net/api' ;
+  //backendUrl = 'http://localhost:7209/api' ;
 
   constructor(private http:HttpClient) { }
 
-  getRecent() {
+  getRecent<Invoice>() {
 
-    return this.http.get(this.backendUrl+'/invoices').pipe(
-      tap(),
-      take(1)
-    )
-
-
+    return this.http.get<Invoice>(this.backendUrl+'/invoices/get-invoice')
   }
 
   getInvoiceData<InvoiceData>(){
 
-    return this.http.get<InvoiceData>(this.backendUrl+'/invoices/add-invoice-data').pipe(
-      tap(), take(1)
-    )
+    return this.http.get<InvoiceData>(this.backendUrl+'/invoices/add-invoice-data')
   }
 
   postInvoiceData<InvoiceDTO>(invoice:InvoiceDTO){
 
-    return this.http.post<InvoiceDTO>(this.backendUrl+'/invoices/post-invoice', invoice).pipe(
-      tap(), take(1)
-    )
+    return this.http.post<InvoiceDTO>(this.backendUrl+'/invoices/post-invoice', invoice)
   }
 
 }

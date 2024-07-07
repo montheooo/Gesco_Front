@@ -7,6 +7,7 @@ import { NavProductionComponent } from "../../layout/nav-production/nav-producti
 import { NavVentesComponent } from "../../layout/nav-ventes/nav-ventes.component";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LigneFactureVentesModal } from '../../modals/ventes/LigneFactureModal';
+import { InvoiceData } from '../../models/invoiceData';
 
 @Component({
     selector: 'app-invoices-list',
@@ -19,25 +20,31 @@ export class InvoicesListComponent implements OnInit {
 
   private modalService = inject(NgbModal);
 
-  invoices!:any;
+  invoices!: Invoice[];
+  invoiceData!: InvoiceData;
 
   constructor(private invoiceListService:InvoiceListService ){
   }
 
   ngOnInit(): void {
 
-    this.invoiceListService.getRecent().subscribe(
+    this.invoiceListService.getRecent<Invoice[]>().subscribe(
       (data)=>{
         console.log(data);
         this.invoices = data ;
       })
+
+      this.invoiceListService.getInvoiceData<InvoiceData>().subscribe(
+        data => this.invoiceData = data
+      )
   }
 
   open(facture:any) {
 
     const modalRef = this.modalService.open(LigneFactureVentesModal, { size: 'lg', centered:true, scrollable:true });
     console.log(facture);
-    modalRef.componentInstance.facture= facture;
+    modalRef.componentInstance.facture = facture;
+    modalRef.componentInstance.invoiceData = this.invoiceData;
   }
 
 }
