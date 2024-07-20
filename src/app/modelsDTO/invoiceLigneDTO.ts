@@ -6,7 +6,8 @@ import { InvoiceLine } from "../models/invoiceLine"
 export interface InvoiceLigneDTO{
 
   article:Article,
+  idLigne:number,
   depot:Depot,
-  prix_unitaire: number,
+  prixUnitaire: number,
   quantite: number,
 }

@@ -3,11 +3,11 @@ import { InvoiceLine } from "./invoiceLine"
 
 export interface Invoice{
 
-  nomClient:Client,
+  nomClient:string,
   referenceFacture:string
-  dateFacture: Date
+  dateFacture: string
   ligneFactures: InvoiceLine[],
-  montantFacture:number
-
-
+  montantFacture?:number,
+  statusFacture:string,
+  numeroFacrure:number
 }

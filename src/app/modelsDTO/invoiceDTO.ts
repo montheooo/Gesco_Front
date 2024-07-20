@@ -1,12 +1,13 @@
 import { Client } from "../models/client"
-import { InvoiceLine } from "../models/invoiceLine"
+import { InvoiceLigneDTO } from "../modelsDTO/invoiceLigneDTO"
 
 export interface InvoiceDTO{
 
   client:Client,
   invoiceReference:string
   invoiceDate: string
-  invoiceLines: InvoiceLine[],
+  invoiceLines: InvoiceLigneDTO[],
   status:string
+  montantFacture:number
 
 }

@@ -10,8 +10,7 @@ import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map }
 import { Article } from "../../models/article";
 import { Depot } from "../../models/depot";
 import { Invoice } from "../../models/invoice";
-import { InvoiceDTO } from "../../modelsDTO/invoiceDTO";
-import { InvoiceLigneDTO } from "../../modelsDTO/invoiceLigneDTO";
+
 
 @Component({
 	standalone: true,
@@ -287,34 +286,23 @@ export class LigneFactureVentesModal {
   update_ligne():void{
 
 
-    this.facture.ligneFactures.map((ligne) => {
-      if (ligne.idLigne == this.ligneFactureFormGroup.controls['ligne'].value) {
-        ligne.idArticle = this.ligneFactureFormGroup.value.idProduit;
-        ligne.idDepot = this.ligneFactureFormGroup.value.idDepot;
-        ligne.quantite = this.ligneFactureFormGroup.value.quantite;
-        ligne.prixUnitaire = this.ligneFactureFormGroup.value.prix_unitaire;
 
-      }
-    })
 
-    console.log(this.facture.ligneFactures)
+   // console.log(this.facture.ligneFactures)
   }
 
   update_invoice():void{
 
-    let newLignes = [...this.facture.ligneFactures]
 
 
-
-
-
-
-    let invoice : InvoiceDTO = {
-      client: this.facture.nomClient,
-      invoiceReference: this.facture.referenceFacture,
-      invoiceDate: new Date(this.facture.dateFacture).toISOString().slice(0, 10),
-      invoiceLines: newLignes,
-      status: "EN COURS"
+  /*  let invoice : Invoice = {
+      client: this.facture.client.m,
+      referenceFacture: this.facture.referenceFacture,
+      dateFacture: new Date(this.facture.dateFacture).toISOString().slice(0, 10),
+      ligneFactures: [],
+      idFacrure: this.facture.idFacrure,
+      montantFacture: this.facture.montantFacture,
+      statusFacture: "EN COURS"
 
     }
 
@@ -324,30 +312,16 @@ export class LigneFactureVentesModal {
         this.router.navigate(['/invoices-list']);
       }
     )
-
+ */
   }
 
   getTotalLignes():number{
 
      this.sum = 0;
 
-    if (!this.edited) {
-      this.facture.ligneFactures.map((ligne) => this.sum += ligne.quantite*ligne.prixUnitaire )
-     // console.log(sum);
+
       return this.sum
 
-    } else {
-
-      this.facture.ligneFactures.map((ligne) => {
-        if (ligne.idLigne !== this.ligneFactureFormGroup.controls['ligne'].value) {
-          this.sum += ligne.quantite*ligne.prixUnitaire
-        }
-      })
-
-      this.sum += this.ligneFactureFormGroup.controls['prix_unitaire'].value*this.ligneFactureFormGroup.controls['quantite'].value ;
-      //console.log(sum);
-      return this.sum
-    }
 
   }
 

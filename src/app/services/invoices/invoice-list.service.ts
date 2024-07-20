@@ -10,8 +10,8 @@ import { InvoiceDTO } from '../../modelsDTO/invoiceDTO';
 })
 export class InvoiceListService {
 
-  backendUrl = 'https://gescofunctionaz.azurewebsites.net/api' ;
-  //backendUrl = 'http://localhost:7209/api' ;
+  //backendUrl = 'https://gescofunctionaz.azurewebsites.net/api' ;
+  backendUrl = 'http://localhost:7209/api' ;
 
   constructor(private http:HttpClient) { }
 
@@ -28,6 +28,11 @@ export class InvoiceListService {
   postInvoiceData<InvoiceDTO>(invoice:InvoiceDTO){
 
     return this.http.post<InvoiceDTO>(this.backendUrl+'/invoices/post-invoice', invoice)
+  }
+
+  deleteInvoice<InvoiceDTO>(invoice:InvoiceDTO){
+
+    return this.http.post<InvoiceDTO>(this.backendUrl+'/invoices/delete-invoice', invoice)
   }
 
 }

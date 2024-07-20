@@ -12,6 +12,7 @@ import { Client } from '../../models/client';
 import { InvoiceLine } from '../../models/invoiceLine';
 import { AddLigneFactureModal } from '../../modals/ventes/AddLigneFactureModal';
 import { InvoiceDTO } from '../../modelsDTO/invoiceDTO';
+import { InvoiceLigneDTO } from '../../modelsDTO/invoiceLigneDTO';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class InvoicesAddComponent {
 
   invoiceFormGroup!: FormGroup;
   submitted:boolean = false;
-  datasLigne:InvoiceLine[] =  [];
+  datasLigne:InvoiceLigneDTO[] =  [];
   invoiceData!:InvoiceData;
 
   get f() { return this.invoiceFormGroup.controls; }
@@ -71,10 +72,11 @@ export class InvoicesAddComponent {
     const modalRef = this.modalService.open(AddLigneFactureModal, { size: 'lg', centered:true, scrollable:true });
 
     modalRef.componentInstance.invoiceData= invoiceData;
-    modalRef.componentInstance.ligneFactureEvent.subscribe((value:InvoiceLine) => {
+    modalRef.componentInstance.ligneFactureEvent.subscribe((value:InvoiceLigneDTO) => {
 
       console.log(value);
-      this.datasLigne.push(value)
+      this.datasLigne.push(value);
+      modalRef.componentInstance.ligneFactureFormGroup.reset();
     });
 
   }
@@ -97,7 +99,8 @@ export class InvoicesAddComponent {
       invoiceReference: this.invoiceFormGroup.value.reference_facture,
       invoiceDate: new Date(this.invoiceFormGroup.value.date_facture.year, this.invoiceFormGroup.value.date_facture.month, this.invoiceFormGroup.value.date_facture.day).toISOString().slice(0, 10),
       invoiceLines: this.datasLigne,
-      status: "EN COURS"
+      status: "EN COURS",
+      montantFacture :0
 
     }
 

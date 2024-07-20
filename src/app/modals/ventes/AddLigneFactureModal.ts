@@ -39,7 +39,7 @@ import { Article } from "../../models/article";
               <div class="col-auto form-group ">
                 <label for="prix_unitaire">Prix Unitaire</label>
                 <input type="number" class="form-control" id="prix-unitaire"
-                      placeholder="Entrer le prix unitaire" formControlName="prix_unitaire" [ngClass]="{ 'is-invalid': submitted && f['prix_unitaire'].errors }"/>
+                      placeholder="Entrer le prix unitaire" formControlName="prixUnitaire" [ngClass]="{ 'is-invalid': submitted && f['prix_unitaire'].errors }"/>
                 <div *ngIf="submitted && f['prix_unitaire'].errors" class="invalid-feedback">
                   <div *ngIf="f['prix_unitaire'].errors['required']">Entrez le prix unitaire</div>
                 </div>
@@ -69,6 +69,9 @@ export class AddLigneFactureModal {
 
   @Input()
   invoiceData!:InvoiceData
+
+  @Input()
+  idLigne!:number
 
   @Output()
   ligneFactureEvent = new EventEmitter();
@@ -108,8 +111,9 @@ export class AddLigneFactureModal {
 
     this.ligneFactureFormGroup = formBuilder.group({
       article: ['', new RequiredValidator],
-      prix_unitaire: 0,
+      prixUnitaire: 0,
       quantite: 0,
+      idLigne: this.idLigne,
       depot: ['', new RequiredValidator],
     })
   }
@@ -121,7 +125,7 @@ export class AddLigneFactureModal {
   addLigne(ligne:FormGroup){
 
     console.log(ligne)
-    this.ligneFactureEvent.next(this.ligneFactureFormGroup.value)
+    this.ligneFactureEvent.next(ligne.value);
   }
 
 

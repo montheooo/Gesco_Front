@@ -6,11 +6,7 @@ export interface InvoiceLine {
 
   idLigne: number,
   nomArticle: string,
-  nomDepot: string,
+  nomDepot: String,
   prixUnitaire: number,
-  quantite: number,
-  idArticle:number,
-  idDepot:number
-
-
+  quantite: number
 }

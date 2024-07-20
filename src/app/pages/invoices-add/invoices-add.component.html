@@ -57,10 +57,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let ligne of datasLigne">
-            <td>{{ligne.nomArticle}}</td>
+            <td>{{ligne.article.nomProduit}}</td>
             <td>{{ ligne.quantite}}</td>
             <td>{{ ligne.prixUnitaire}}</td>
-            <b><td>{{ ligne.nomDepot}}</td></b>
+            <b><td>{{ ligne.depot.nomDepot}}</td></b>
             <td>{{ ligne.prixUnitaire * ligne.quantite}}</td>
 
           </tr>

@@ -8,6 +8,9 @@ import { NavVentesComponent } from "../../layout/nav-ventes/nav-ventes.component
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LigneFactureVentesModal } from '../../modals/ventes/LigneFactureModal';
 import { InvoiceData } from '../../models/invoiceData';
+import { InvoiceDTO } from '../../modelsDTO/invoiceDTO';
+import { WarningDeleteModal } from '../../modals/ventes/WarningDeleteModal';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-invoices-list',
@@ -23,7 +26,7 @@ export class InvoicesListComponent implements OnInit {
   invoices!: Invoice[];
   invoiceData!: InvoiceData;
 
-  constructor(private invoiceListService:InvoiceListService ){
+  constructor(private invoiceListService:InvoiceListService, private router:Router ){
   }
 
   ngOnInit(): void {
@@ -39,12 +42,31 @@ export class InvoicesListComponent implements OnInit {
       )
   }
 
-  open(facture:any) {
+  open(facture:Invoice) {
 
     const modalRef = this.modalService.open(LigneFactureVentesModal, { size: 'lg', centered:true, scrollable:true });
     console.log(facture);
     modalRef.componentInstance.facture = facture;
     modalRef.componentInstance.invoiceData = this.invoiceData;
+  }
+
+  openWarningDelete(facture:Invoice) {
+
+    const modalRef = this.modalService.open(WarningDeleteModal, { size: 'sm', centered:true, scrollable:true });
+    modalRef.componentInstance.deleteEvent.subscribe(
+
+      //this.router.navigate(['/invoices-list'])
+
+      (fac:Invoice) => {
+       console.log(fac);
+       const result = this.invoices.filter((obj) => obj.numeroFacrure == 17);
+       console.log(result);
+
+      }
+    )
+
+    modalRef.componentInstance.invoice = facture;
+
   }
 
 }
