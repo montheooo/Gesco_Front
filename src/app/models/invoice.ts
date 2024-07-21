@@ -9,5 +9,5 @@ export interface Invoice{
   ligneFactures: InvoiceLine[],
   montantFacture?:number,
   statusFacture:string,
-  numeroFacrure:number
+  numeroFacture:number
 }

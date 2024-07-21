@@ -59,8 +59,9 @@ export class InvoicesListComponent implements OnInit {
 
       (fac:Invoice) => {
        console.log(fac);
-       const result = this.invoices.filter((obj) => obj.numeroFacrure == 17);
-       console.log(result);
+
+       this.invoices = this.invoices.filter((obj) => { return obj.numeroFacture !== fac.numeroFacture} );
+
 
       }
     )
