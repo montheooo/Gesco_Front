@@ -12,6 +12,7 @@ import { InvoiceDTO } from '../../modelsDTO/invoiceDTO';
 import { WarningDeleteModal } from '../../modals/ventes/WarningDeleteModal';
 import { Router } from '@angular/router';
 
+
 @Component({
     selector: 'app-invoices-list',
     standalone: true,
@@ -53,9 +54,9 @@ export class InvoicesListComponent implements OnInit {
   openWarningDelete(facture:Invoice) {
 
     const modalRef = this.modalService.open(WarningDeleteModal, { size: 'sm', centered:true, scrollable:true });
-    modalRef.componentInstance.deleteEvent.subscribe(
 
-      //this.router.navigate(['/invoices-list'])
+    modalRef.componentInstance.invoice = facture;
+    modalRef.componentInstance.deleteEvent.subscribe(
 
       (fac:Invoice) => {
        console.log(fac);
@@ -66,7 +67,7 @@ export class InvoicesListComponent implements OnInit {
       }
     )
 
-    modalRef.componentInstance.invoice = facture;
+
 
   }
 

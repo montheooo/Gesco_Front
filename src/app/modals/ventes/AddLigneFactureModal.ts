@@ -1,7 +1,7 @@
 import { DatePipe, NgClass, NgFor, NgIf } from "@angular/common";
 import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
 import { NgbActiveModal, NgbModal, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, RequiredValidator } from "@angular/forms";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map } from "rxjs";
 import { InvoiceData } from "../../models/invoiceData";
 import { Depot } from "../../models/depot";
@@ -37,11 +37,11 @@ import { Article } from "../../models/article";
               </div>
 
               <div class="col-auto form-group ">
-                <label for="prix_unitaire">Prix Unitaire</label>
+                <label for="prixUnitaire">Prix Unitaire</label>
                 <input type="number" class="form-control" id="prix-unitaire"
-                      placeholder="Entrer le prix unitaire" formControlName="prixUnitaire" [ngClass]="{ 'is-invalid': submitted && f['prix_unitaire'].errors }"/>
-                <div *ngIf="submitted && f['prix_unitaire'].errors" class="invalid-feedback">
-                  <div *ngIf="f['prix_unitaire'].errors['required']">Entrez le prix unitaire</div>
+                      placeholder="Entrer le prix unitaire" formControlName="prixUnitaire" [ngClass]="{ 'is-invalid': submitted && f['prixUnitaire'].errors }"/>
+                <div *ngIf="submitted && f['prixUnitaire'].errors" class="invalid-feedback">
+                  <div *ngIf="f['prixUnitaire'].errors['required']">Entrez le prix unitaire</div>
                 </div>
               </div>
 
@@ -54,13 +54,14 @@ import { Article } from "../../models/article";
                 </div>
               </div>
 
+              <div class="modal-footer">
+                <button type="button"  class="btn btn-outline-danger" (click)="onSubmit()">Ajouter Ligne</button>
+              </div>
           </div>
       </div>
     </div>
 
-		<div class="modal-footer">
-			<button type="button" class="btn btn-outline-dark" (click)="addLigne(ligneFactureFormGroup)">Ajouter Ligne</button>
-		</div>
+
 	`,
   imports: [DatePipe, NgFor, NgIf, NgbTypeahead, NgClass, ReactiveFormsModule],
 })
@@ -81,7 +82,8 @@ export class AddLigneFactureModal {
 
 
   activeModal: NgbActiveModal = inject(NgbActiveModal);
-  get f(): { [key: string]: AbstractControl<any, any> } { return this.ligneFactureFormGroup.controls;}
+ // get f(): { [key: string]: AbstractControl<any, any> } { return this.ligneFactureFormGroup.controls;}
+  get f() { return this.ligneFactureFormGroup.controls; }
 
   formatterDepotResult = (x: { nomDepot: string, idDepot:number }) => x.nomDepot + ' | ' + x.idDepot;
   formatterDepot = (x: { nomDepot: string, idDepot:number }) => x.nomDepot ;
@@ -110,22 +112,33 @@ export class AddLigneFactureModal {
   constructor(private formBuilder:FormBuilder){
 
     this.ligneFactureFormGroup = formBuilder.group({
-      article: ['', new RequiredValidator],
-      prixUnitaire: 0,
-      quantite: 0,
+      article: ['', Validators.required],
+      prixUnitaire: [, Validators.required],
+      quantite: [, Validators.required],
       idLigne: this.idLigne,
-      depot: ['', new RequiredValidator],
-    })
+      depot: ['', Validators.required],
+    });
   }
 
   ngOnInit():void{
 
+    this.ligneFactureFormGroup.controls['article'].valueChanges.subscribe(val => {
+
+      this.ligneFactureFormGroup.controls['prixUnitaire'].setValue(this.ligneFactureFormGroup.controls['article'].value.prixProduit);
+    });
+
   }
 
-  addLigne(ligne:FormGroup){
+  onSubmit(){
 
-    console.log(ligne)
-    this.ligneFactureEvent.next(ligne.value);
+    this.submitted = true;
+    console.log(this.ligneFactureFormGroup);
+    if (this.ligneFactureFormGroup.invalid) {
+      console.log(this.ligneFactureFormGroup);
+      return;
+    }
+
+    this.ligneFactureEvent.next(this.ligneFactureFormGroup.value);
   }
 
 

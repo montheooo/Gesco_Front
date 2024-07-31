@@ -15,15 +15,15 @@ import { Invoice } from "../../models/invoice";
 	standalone: true,
 	template: `
 		<div class="modal-header">
-			<h4 class="modal-title">Supprimer Facture ?</h4>
-			<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+			<h5 class="modal-title text-danger">Attention !!!</h5>
+			<button type="button" class="btn btn-outline-danger" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 		</div>
 		<div class="modal-body">
-      <p>Voulez-vous vraiment Supprimer cette facture ?</p>
+      <p>Voulez-vous vraiment supprimer definitivement la facture N* <b>{{invoice.referenceFacture}}</b> du client <b>{{invoice.nomClient}} ?</b></p>
     </div>
 
 		<div class="modal-footer">
-			<button type="button" class="btn btn-outline-dark" (click)="deleteInvoice()">Suprimer Facture</button>
+			<button type="button" class="btn btn-outline-danger" (click)="deleteInvoice()">Confirmer Suppression</button>
 		</div>
 	`,
   imports: [DatePipe, NgFor, NgIf, NgbTypeahead, NgClass, ReactiveFormsModule],
