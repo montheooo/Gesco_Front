@@ -16,9 +16,6 @@ export class ProductionService {
 
   getAllProduction(){
 
-    return this.http.get(this.backendUrl+'/production').pipe(
-      tap(),
-      take(1)
-    )
+    return this.http.get(this.backendUrl+'/production')
   }
 }
