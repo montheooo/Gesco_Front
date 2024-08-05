@@ -124,7 +124,9 @@ export class AddLigneFactureModal {
 
     this.ligneFactureFormGroup.controls['article'].valueChanges.subscribe(val => {
 
-      this.ligneFactureFormGroup.controls['prixUnitaire'].setValue(this.ligneFactureFormGroup.controls['article'].value.prixProduit);
+      if (this.ligneFactureFormGroup.controls['article'].value) {
+        this.ligneFactureFormGroup.controls['prixUnitaire'].setValue(this.ligneFactureFormGroup.controls['article'].value.prixProduit);
+      }
     });
 
   }

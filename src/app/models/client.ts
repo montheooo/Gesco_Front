@@ -1,7 +1,7 @@
 export interface Client {
 
-  idClient:number
+  idClient?:number
   nomClient: string
-  adresseClient?: string
+  addresseClient?: string
 
 }

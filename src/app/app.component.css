@@ -1,0 +1,10 @@
+
+::ng-deep .dropdown-menu .dropdown-item:hover {
+  background-color: #f0f0f0;
+  color: #FF0000;
+}
+
+::ng-deep .dropdown-menu .dropdown-item {
+  background-color: #ffff;
+  color: #5900ff;
+}
