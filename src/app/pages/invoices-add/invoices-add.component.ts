@@ -1,10 +1,10 @@
-import { Component, ViewChild, ViewEncapsulation} from '@angular/core';
+import { Component, ViewChild} from '@angular/core';
 import { NavVentesComponent } from "../../layout/nav-ventes/nav-ventes.component";
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Invoice } from '../../models/invoice';
-import { NgbDatepickerModule, NgbHighlight, NgbModal, NgbTypeahead, NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbModal, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { InvoiceListService } from '../../services/invoices/invoice-list.service';
 import { InvoiceData } from '../../models/invoiceData';
 import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChanged, filter, map, merge } from 'rxjs';
@@ -13,7 +13,6 @@ import { InvoiceLine } from '../../models/invoiceLine';
 import { AddLigneFactureModal } from '../../modals/ventes/AddLigneFactureModal';
 import { InvoiceDTO } from '../../modelsDTO/invoiceDTO';
 import { InvoiceLigneDTO } from '../../modelsDTO/invoiceLigneDTO';
-import { AddClientModal } from '../../modals/clients/AddClientModal';
 
 
 @Component({
@@ -21,8 +20,7 @@ import { AddClientModal } from '../../modals/clients/AddClientModal';
     standalone: true,
     templateUrl: './invoices-add.component.html',
     styleUrl: './invoices-add.component.css',
-    imports: [NavVentesComponent, NgFor, NgIf, NgClass, NgbTypeahead, NgbHighlight, NgbDatepickerModule, ReactiveFormsModule],
-    encapsulation:ViewEncapsulation.None
+    imports: [NavVentesComponent, NgFor, NgIf, NgClass, NgbTypeahead, NgbDatepickerModule, ReactiveFormsModule],
 
 })
 export class InvoicesAddComponent {
@@ -63,7 +61,7 @@ export class InvoicesAddComponent {
   formatterClient = (x: { nomClient: string, idClient:number }) => x.nomClient ;
 
 
-  constructor(private formBuilder:FormBuilder, private router:Router, private invoiceService:InvoiceListService, private modalService:NgbModal, private config: NgbTypeaheadConfig){
+  constructor(private formBuilder:FormBuilder, private router:Router, private invoiceService:InvoiceListService, private modalService:NgbModal){
 
 
     this.invoiceFormGroup = this.formBuilder.group({
@@ -72,8 +70,6 @@ export class InvoicesAddComponent {
       date_facture: [Validators.required],
 
     });
-
-
 
   }
 
@@ -85,7 +81,7 @@ export class InvoicesAddComponent {
 
   }
 
-  openAddLigneFacture(invoiceData:InvoiceData): void{
+  open(invoiceData:InvoiceData): void{
 
     console.log(invoiceData);
     console.log(this.invoiceFormGroup);
@@ -97,29 +93,10 @@ export class InvoicesAddComponent {
 
       console.log(value);
       this.datasLigne.push(value);
-      modalRef.componentInstance.submitted = false ;
       modalRef.componentInstance.ligneFactureFormGroup.reset();
     });
 
   }
-
-  openAddClient(): void{
-
-
-    console.log(this.invoiceFormGroup);
-
-    const modalRef = this.modalService.open(AddClientModal, { size: 'lg', centered:true, scrollable:true });
-
-
-    modalRef.result.then((value:Client) => {
-      console.log(value);
-      this.invoiceData.clients.push(value);
-      //this.invoiceFormGroup.controls['client'].setValue(value.nomClient);
-
-    });
-
-  }
-
 
   removeLigne(indexligne:number):void{
 

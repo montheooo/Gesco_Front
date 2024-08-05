@@ -70,7 +70,6 @@ import { Invoice } from "../../models/invoice";
               <button (click)=" update_ligne()" type="button" class="btn btn-outline-dark mt-3" >Modifier Ligne</button>
             </div>
 
-
         </div> <!-- Form Edit -->
 
         <div class="gy-2 gx-3 align-items-center" >
@@ -81,9 +80,9 @@ import { Invoice } from "../../models/invoice";
                   <th>Article</th>
                   <th>Qte</th>
                   <th>PU</th>
-                  <th>Depot</th>
+                  <th>Depot.S</th>
                   <th>Montant</th>
-                  <th>Action</th>
+                  <th></th>
 
                 </tr>
               </thead>
@@ -186,9 +185,9 @@ import { Invoice } from "../../models/invoice";
       </div>
 		</div>
 		<div class="modal-footer">
-
+			<button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
       <div class="col-auto form-group ">
-        <button (click)=" update_invoice()" type="button" class="btn btn-outline-danger mt-3" >Enregistrer</button>
+        <button (click)=" update_invoice()" type="button" class="btn btn-outline-dark mt-3" >Enregistrer</button>
       </div>
 		</div>
 	`,
