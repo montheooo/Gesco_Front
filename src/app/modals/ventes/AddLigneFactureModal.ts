@@ -6,22 +6,29 @@ import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map }
 import { InvoiceData } from "../../models/invoiceData";
 import { Depot } from "../../models/depot";
 import { Article } from "../../models/article";
+import { AddArticleModal } from "../articles/AddArticleModal";
+import { AddDepotModal } from "../depots/AddDepotModal";
 
 @Component({
 	standalone: true,
 	template: `
 		<div class="modal-header">
-			<h4 class="modal-title">Ligne Facture</h4>
+			<h4 class="modal-title text-danger">Ligne Facture</h4>
 			<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 		</div>
 		<div class="modal-body">
       <div class="container">
           <div class="col-auto form-group" [formGroup]="ligneFactureFormGroup">
 
-              <div class="col-auto form-group ">
-                <label for="article">Article</label>
+              <label for="article">Article</label>
+              <div class="col-auto input-group ">
                 <input type="text" class="form-control" id="article" [ngbTypeahead]="articleSearch" [resultFormatter]="formatterArticle" [inputFormatter]="formatterArticle"
                       placeholder="Selectionner un article" formControlName="article" [ngClass]="{ 'is-invalid': submitted && f['article'].errors }"/>
+                <button class="btn btn-outline-danger " (click)="openAddArticle()" type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                  </svg>
+                </button>
                 <div *ngIf="submitted && f['article'].errors" class="invalid-feedback">
                   <div *ngIf="f['article'].errors['required']">Entrez le nom de l'article</div>
                 </div>
@@ -45,10 +52,15 @@ import { Article } from "../../models/article";
                 </div>
               </div>
 
-              <div class="col-auto form-group ">
-                <label for="depot">Depot</label>
+              <label for="depot">Depot</label>
+              <div class="col-auto input-group ">
                 <input type="text" class="form-control" id="depot" [ngbTypeahead]="depotSearch" [resultFormatter]="formatterDepot" [inputFormatter]="formatterDepot"
                       placeholder="Selectionner un depot" formControlName="depot" [ngClass]="{ 'is-invalid': submitted && f['depot'].errors }"/>
+                <button class="btn btn-outline-danger " (click)="openAddDepot()" type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                  </svg>
+                </button>
                 <div *ngIf="submitted && f['depot'].errors" class="invalid-feedback">
                   <div *ngIf="f['depot'].errors['required']">Entrez le nom du depot</div>
                 </div>
@@ -109,7 +121,7 @@ export class AddLigneFactureModal {
     ),
   );
 
-  constructor(private formBuilder:FormBuilder){
+  constructor(private formBuilder:FormBuilder, private modalService:NgbModal){
 
     this.ligneFactureFormGroup = formBuilder.group({
       article: ['', Validators.required],
@@ -141,6 +153,32 @@ export class AddLigneFactureModal {
     }
 
     this.ligneFactureEvent.next(this.ligneFactureFormGroup.value);
+  }
+
+  openAddArticle(): void{
+
+    const modalRef = this.modalService.open(AddArticleModal, { size: 'lg', centered:true, scrollable:true });
+
+    modalRef.result.then((value:Article) => {
+      console.log(value);
+      this.invoiceData.articles.push(value);
+      //this.invoiceFormGroup.controls['client'].setValue(value.nomClient);
+
+    });
+
+  }
+
+  openAddDepot(): void{
+
+    const modalRef = this.modalService.open(AddDepotModal, { size: 'lg', centered:true, scrollable:true });
+
+    modalRef.result.then((value:Depot) => {
+      console.log(value);
+      this.invoiceData.depots.push(value);
+      //this.invoiceFormGroup.controls['client'].setValue(value.nomClient);
+
+    });
+
   }
 
 

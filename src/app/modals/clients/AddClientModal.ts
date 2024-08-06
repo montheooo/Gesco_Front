@@ -9,8 +9,8 @@ import { ClientService } from "../../services/Clients/client.service";
 	standalone: true,
 	template: `
 		<div class="modal-header">
-			<h4 class="modal-title">Nouveau Client</h4>
-			<button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+			<h4 class="modal-title text-center text-danger">Nouveau Client</h4>
+			<button type="button" class="btn btn-outline-danger" aria-label="Close" (click)="activeModal.dismiss()"></button>
 		</div>
 		<div class="modal-body">
       <div class="container">

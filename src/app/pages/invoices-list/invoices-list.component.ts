@@ -67,8 +67,10 @@ export class InvoicesListComponent implements OnInit {
       }
     )
 
+  }
 
-
+  goToInvoiceAdd(){
+    this.router.navigate(['/invoices-add']);
   }
 
 }

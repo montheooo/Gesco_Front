@@ -11,7 +11,7 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 })
 export class NavVentesComponent {
 
-  isMenuCollapsed:boolean = false ;
+  isMenuCollapsed:boolean = true ;
   title:string = "Menu"
 
 }
