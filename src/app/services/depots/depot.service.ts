@@ -9,8 +9,8 @@ export class DepotService {
 
   constructor(private http:HttpClient) { }
 
-  //backendUrl = 'https://gescofunctionaz.azurewebsites.net/api' ;
-  backendUrl = 'http://localhost:7209/api' ;
+  backendUrl = 'https://gescofunctionaz.azurewebsites.net/api' ;
+  //backendUrl = 'http://localhost:7209/api' ;
 
   getRecent<Depot>() {
 
