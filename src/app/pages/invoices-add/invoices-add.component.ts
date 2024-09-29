@@ -50,15 +50,6 @@ export class InvoicesAddComponent {
 		);
 	};
 
-  search: OperatorFunction<string, readonly Client[]> =  (text$: Observable<string>) =>
-  text$.pipe(
-    debounceTime(200),
-    distinctUntilChanged(),
-    map((term) =>
-      term.length < 1 ? [] : this.invoiceData.clients.filter((v) => v.nomClient.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10),
-    ),
-  );
-
   formatter = (x: { nomClient: string, idClient:number }) => x.nomClient + '';
   formatterClient = (x: { nomClient: string, idClient:number }) => x.nomClient ;
 

@@ -1,8 +1,8 @@
 import { DatePipe, NgClass, NgFor, NgIf } from "@angular/common";
-import { Component, EventEmitter, Input, Output, inject } from "@angular/core";
+import { Component, EventEmitter, Input, Output, ViewChild, inject } from "@angular/core";
 import { NgbActiveModal, NgbModal, NgbTypeahead } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map } from "rxjs";
+import { Observable, OperatorFunction, Subject, debounceTime, distinctUntilChanged, filter, map, merge } from "rxjs";
 import { InvoiceData } from "../../models/invoiceData";
 import { Depot } from "../../models/depot";
 import { Article } from "../../models/article";
@@ -22,8 +22,9 @@ import { AddDepotModal } from "../depots/AddDepotModal";
 
               <label for="article">Article</label>
               <div class="col-auto input-group ">
-                <input type="text" class="form-control" id="article" [ngbTypeahead]="articleSearch" [resultFormatter]="formatterArticle" [inputFormatter]="formatterArticle"
-                      placeholder="Selectionner un article" formControlName="article" [ngClass]="{ 'is-invalid': submitted && f['article'].errors }"/>
+                <input type="text" class="form-control" id="article" [ngbTypeahead]="articleSearch" [resultFormatter]="formatterArticle" [inputFormatter]="formatterArticle" [selectOnExact]="true"
+                      (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead" popupClass="search-result"
+                      [editable]="false" placeholder="Selectionner un article" placement="bottom-left" formControlName="article" [ngClass]="{ 'is-invalid': submitted && f['article'].errors }"/>
                 <button class="btn btn-outline-danger " (click)="openAddArticle()" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
@@ -54,8 +55,9 @@ import { AddDepotModal } from "../depots/AddDepotModal";
 
               <label for="depot">Depot</label>
               <div class="col-auto input-group ">
-                <input type="text" class="form-control" id="depot" [ngbTypeahead]="depotSearch" [resultFormatter]="formatterDepot" [inputFormatter]="formatterDepot"
-                      placeholder="Selectionner un depot" formControlName="depot" [ngClass]="{ 'is-invalid': submitted && f['depot'].errors }"/>
+                <input type="text" class="form-control" id="depot" [ngbTypeahead]="depotSearch" [resultFormatter]="formatterDepot" [inputFormatter]="formatterDepot" [selectOnExact]="true"
+                      (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead" popupClass="search-result"
+                      [editable]="false" placeholder="Selectionner un depot" placement="bottom-left" formControlName="depot" [ngClass]="{ 'is-invalid': submitted && f['depot'].errors }"/>
                 <button class="btn btn-outline-danger " (click)="openAddDepot()" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
@@ -92,9 +94,11 @@ export class AddLigneFactureModal {
   submitted:boolean = false;
   ligneFactureFormGroup:FormGroup;
 
-
+  focus$ = new Subject<string>();
+	click$ = new Subject<string>();
+  @ViewChild('instance', { static: true }) instance!: NgbTypeahead;
   activeModal: NgbActiveModal = inject(NgbActiveModal);
- // get f(): { [key: string]: AbstractControl<any, any> } { return this.ligneFactureFormGroup.controls;}
+
   get f() { return this.ligneFactureFormGroup.controls; }
 
   formatterDepotResult = (x: { nomDepot: string, idDepot:number }) => x.nomDepot + ' | ' + x.idDepot;
@@ -103,23 +107,33 @@ export class AddLigneFactureModal {
   formatterArticleResult = (x: { nomProduit: string, idProduit:number }) => x.nomProduit + ' | ' + x.idProduit;
   formatterArticle = (x: { nomProduit: string, idProduit:number }) => x.nomProduit ;
 
-  articleSearch: OperatorFunction<string, readonly Article[]> =  (text$: Observable<string>) =>
-  text$.pipe(
-    debounceTime(200),
-    distinctUntilChanged(),
-    map((term) =>
-      term.length < 1 ? [] : this.invoiceData.articles.filter((v) => v.nomProduit.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10),
-    ),
-  );
 
-  depotSearch: OperatorFunction<string, readonly Depot[]> =  (text$: Observable<string>) =>
-  text$.pipe(
-    debounceTime(200),
-    distinctUntilChanged(),
-    map((term) =>
-      term.length < 1 ? [] : this.invoiceData.depots.filter((v) => v.nomDepot.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10),
-    ),
-  );
+
+  articleSearch: OperatorFunction<string, readonly Article[]> = (text$: Observable<string>) => {
+		const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+		const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+		const inputFocus$ = this.focus$;
+
+		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+			map((term) =>
+				(term === '' ? this.invoiceData.articles : this.invoiceData.articles.filter((v) => v.nomProduit.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
+			),
+		);
+	};
+
+  depotSearch: OperatorFunction<string, readonly Depot[]> = (text$: Observable<string>) => {
+		const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+		const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+		const inputFocus$ = this.focus$;
+
+		return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+			map((term) =>
+				(term === '' ? this.invoiceData.depots : this.invoiceData.depots.filter((v) => v.nomDepot.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10),
+			),
+		);
+	};
+
+
 
   constructor(private formBuilder:FormBuilder, private modalService:NgbModal){
 

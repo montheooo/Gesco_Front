@@ -217,9 +217,11 @@
           <clipPath id="a"><path fill="#fff" d="M0 0h982v239H0z" /></clipPath>
         </defs>
       </svg>
-      <h1>Hello Falone !</h1>
-      <p></p>
-      <button class="btn btn-primary" [routerLink]="['/invoices-list']" >Factures Recentes</button>
+      <h1>Hello!</h1>
+      <div class="row gy-2 gx-3 mt-3 align-items-center">
+        <button class="btn btn-primary" [routerLink]="['/invoices-list']" >Factures Clients</button>
+        <button class="btn btn-primary" [routerLink]="['/invoices-list']" >Factures Fournisseurs</button>
+      </div>
     </div>
     <div class="divider" role="separator" aria-label="Divider"></div>
     <div class="right-side">
@@ -246,6 +248,74 @@
           [routerLink]="['/invoices-list']"
         >
           <span>Ventes</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="14"
+            viewBox="0 -960 960 960"
+            width="14"
+            fill="currentColor"
+          >
+            <path
+              d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"
+            />
+          </svg>
+          </a>
+          <a
+            class="pill"
+            [routerLink]="['/production']"
+          >
+            <span>Clients</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="14"
+              viewBox="0 -960 960 960"
+              width="14"
+              fill="currentColor"
+            >
+              <path
+                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"
+              />
+            </svg>
+          </a>
+          <a
+          class="pill"
+          [routerLink]="['/invoices-list']"
+        >
+          <span>Articles Clients</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="14"
+            viewBox="0 -960 960 960"
+            width="14"
+            fill="currentColor"
+          >
+            <path
+              d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"
+            />
+          </svg>
+          </a>
+          <a
+            class="pill"
+            [routerLink]="['/production']"
+          >
+            <span>Fournisseurs</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="14"
+              viewBox="0 -960 960 960"
+              width="14"
+              fill="currentColor"
+            >
+              <path
+                d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"
+              />
+            </svg>
+          </a>
+          <a
+          class="pill"
+          [routerLink]="['/invoices-list']"
+        >
+          <span>Articles Fournisseurs</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="14"

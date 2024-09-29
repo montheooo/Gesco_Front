@@ -22,7 +22,7 @@
       <div class="col-auto input-group ">
         <input type="text" class="form-control" id="client" [ngbTypeahead]="clientSearch" [resultFormatter]="formatter" [inputFormatter]="formatterClient" [selectOnExact]="true"
               (focus)="focus$.next($any($event).target.value)" (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead" popupClass="search-result"
-              [editable]="false" placeholder="Selectionner un client" formControlName="client" [ngClass]="{ 'is-invalid': submitted && f['client'].errors }"
+              [editable]="false" placeholder="Selectionner un client" placement="bottom-left" formControlName="client" [ngClass]="{ 'is-invalid': submitted && f['client'].errors }"
         />
         <button class="btn btn-outline-danger " (click)="openAddClient()" type="button">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
