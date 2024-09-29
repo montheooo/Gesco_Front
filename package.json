@@ -1,7 +1,8 @@
 {
   "engines": {
     "node": "^18.13.0"
-  },
+   },
+
   "name": "gesco-front",
   "version": "0.0.0",
   "scripts": {
@@ -23,8 +24,12 @@
     "@angular/router": "^17.2.0",
     "@capacitor/android": "^5.7.4",
     "@capacitor/angular": "^2.0.3",
+<<<<<<< HEAD
     "@capacitor/core": "^6.1.2",
     "@capacitor/ios": "^6.1.2",
+=======
+    "@capacitor/core": "latest",
+>>>>>>> parent of 03b7e72 (Add capacitor IOS)
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
